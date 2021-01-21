@@ -1,6 +1,6 @@
 {
-  "serviceName": "MythicalMysfits-Service",
-  "cluster": "MythicalMysfits-Cluster",
+  "serviceName": "tisit-Service",
+  "cluster": "tisit-Cluster",
   "launchType": "FARGATE",
   "deploymentConfiguration": {
     "maximumPercent": 200,
@@ -11,20 +11,20 @@
     "awsvpcConfiguration": {
       "assignPublicIp": "DISABLED",
       "securityGroups": [
-        "REPLACE_ME_SECURITY_GROUP_ID"
+        "sg-03ff7673057f7df08"
       ],
       "subnets": [
-        "REPLACE_ME_PRIVATE_SUBNET_ONE",
-        "REPLACE_ME_PRIVATE_SUBNET_TWO"
+        "subnet-030d99004d3fdcbe2",
+        "subnet-09fe16924e89de29c"
       ]
     }
   },
-  "taskDefinition": "mythicalmysfitsservice",
+  "taskDefinition": "tisitservice",
   "loadBalancers": [
     {
-      "containerName": "MythicalMysfits-Service",
+      "containerName": "tisit-Service",
       "containerPort": 8080,
-      "targetGroupArn": "REPLACE_ME_NLB_TARGET_GROUP_ARN"
+      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-2:552435391670:targetgroup/tisit-TargetGroup/113159d25ac50835"
     }
   ]
 }

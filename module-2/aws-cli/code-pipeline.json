@@ -1,7 +1,7 @@
 {
   "pipeline": {
-      "name": "MythicalMysfitsServiceCICDPipeline",
-      "roleArn": "REPLACE_ME_CODEPIPELINE_ROLE_ARN",
+      "name": "tisitServiceCICDPipeline",
+      "roleArn": "arn:aws:iam::552435391670:role/tisitServiceCodePipelineServiceRole",
       "stages": [
         {
           "name": "Source",
@@ -19,12 +19,12 @@
               },
               "outputArtifacts": [
                 {
-                  "name": "MythicalMysfitsService-SourceArtifact"
+                  "name": "tisitService-SourceArtifact"
                 }
               ],
               "configuration": {
                 "BranchName": "master",
-                "RepositoryName": "MythicalMysfitsService-Repository"
+                "RepositoryName": "tisitService-Repository"
               },
               "runOrder": 1
             }
@@ -43,16 +43,16 @@
               },
               "outputArtifacts": [
                 {
-                  "name": "MythicalMysfitsService-BuildArtifact"
+                  "name": "tisitService-BuildArtifact"
                 }
               ],
               "inputArtifacts": [
                 {
-                  "name": "MythicalMysfitsService-SourceArtifact"
+                  "name": "tisitService-SourceArtifact"
                 }
               ],
               "configuration": {
-                "ProjectName": "MythicalMysfitsServiceCodeBuildProject"
+                "ProjectName": "tisitServiceCodeBuildProject"
               },
               "runOrder": 1
             }
@@ -71,12 +71,12 @@
               },
               "inputArtifacts": [
                 {
-                  "name": "MythicalMysfitsService-BuildArtifact"
+                  "name": "tisitService-BuildArtifact"
                 }
               ],
               "configuration": {
-                "ClusterName": "MythicalMysfits-Cluster",
-                "ServiceName": "MythicalMysfits-Service",
+                "ClusterName": "tisit-Cluster",
+                "ServiceName": "tisit-Service",
                 "FileName": "imagedefinitions.json"
               }
             }
@@ -85,7 +85,7 @@
       ],
       "artifactStore": {
         "type": "S3",
-        "location": "REPLACE_ME_ARTIFACTS_BUCKET_NAME"
+        "location": "tisits3cicd"
       }
   }
 }

@@ -269,8 +269,8 @@ Resources:
   # This is a role which is used by the ECS tasks. Tasks in Amazon ECS define
   # the containers that should be deployed togehter and the resources they
   # require from a compute/memory perspective. So, the policies below will define
-  # the IAM permissions that our Mythical Mysfits docker containers will have.
-  # If you attempted to write any code for the Mythical Mysfits service that
+  # the IAM permissions that our tisit docker containers will have.
+  # If you attempted to write any code for the tisit service that
   # interacted with different AWS service APIs, these roles would need to include
   # those as allowed actions.
   ECSTaskRole:
@@ -303,13 +303,13 @@ Resources:
 
             - Effect: Allow
               Action:
-                # Allows the ECS tasks to interact with only the MysfitsTable
+                # Allows the ECS tasks to interact with only the tisitTable
                 # in DynamoDB
                 - 'dynamodb:Scan'
                 - 'dynamodb:Query'
                 - 'dynamodb:UpdateItem'
                 - 'dynamodb:GetItem'
-              Resource: 'arn:aws:dynamodb:*:*:table/MysfitsTable*'
+              Resource: 'arn:aws:dynamodb:*:*:table/tisitTable*'
 
   # An IAM role that allows the AWS CodePipeline service to perform it's
   # necessary actions. We have intentionally left permissions on this role
@@ -317,10 +317,10 @@ Resources:
   # This will allow you to more simply use CodePipeline in the future should
   # you want to use the service for Pipelines that interact with different
   # AWS services than the ones used in this workshop.
-  MythicalMysfitsServiceCodePipelineServiceRole:
+  tisitServiceCodePipelineServiceRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: MythicalMysfitsServiceCodePipelineServiceRole
+      RoleName: tisitServiceCodePipelineServiceRole
       AssumeRolePolicyDocument:
         Statement:
         - Effect: Allow
@@ -331,7 +331,7 @@ Resources:
           - sts:AssumeRole
       Path: "/"
       Policies:
-      - PolicyName: MythicalMysfitsService-codepipeline-service-policy
+      - PolicyName: tisitService-codepipeline-service-policy
         PolicyDocument:
           Statement:
           - Action:
@@ -367,10 +367,10 @@ Resources:
   # An IAM role that allows the AWS CodeBuild service to perform the actions
   # required to complete a build of our source code retrieved from CodeCommit,
   # and push the created image to ECR.
-  MythicalMysfitsServiceCodeBuildServiceRole:
+  tisitServiceCodeBuildServiceRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: MythicalMysfitsServiceCodeBuildServiceRole
+      RoleName: tisitServiceCodeBuildServiceRole
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -379,7 +379,7 @@ Resources:
             Service: codebuild.amazonaws.com
           Action: sts:AssumeRole
       Policies:
-      - PolicyName: "MythicalMysfitsService-CodeBuildServicePolicy"
+      - PolicyName: "tisitService-CodeBuildServicePolicy"
         PolicyDocument:
           Version: "2012-10-17"
           Statement:
@@ -391,7 +391,7 @@ Resources:
             - "codecommit:Get*"
             - "codecommit:GitPull"
             Resource:
-            - Fn::Sub: arn:aws:codecommit:${AWS::Region}:${AWS::AccountId}:MythicalMysfitsServiceRepository
+            - Fn::Sub: arn:aws:codecommit:${AWS::Region}:${AWS::AccountId}:tisitServiceRepository
           - Effect: "Allow"
             Action:
             - "logs:CreateLogGroup"
@@ -468,11 +468,11 @@ Outputs:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'FargateContainerSecurityGroup' ] ]
   CodeBuildRole:
     Description: REPLACE_ME_CODEBUILD_ROLE_ARN
-    Value: !GetAtt 'MythicalMysfitsServiceCodeBuildServiceRole.Arn'
+    Value: !GetAtt 'tisitServiceCodeBuildServiceRole.Arn'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'MythicalMysfitsServiceCodeBuildServiceRole' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'tisitServiceCodeBuildServiceRole' ] ]
   CodePipelineRole:
     Description: REPLACE_ME_CODEPIPELINE_ROLE_ARN
-    Value: !GetAtt 'MythicalMysfitsServiceCodePipelineServiceRole.Arn'
+    Value: !GetAtt 'tisitServiceCodePipelineServiceRole.Arn'
     Export:
-      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'MythicalMysfitsServiceCodePipelineServiceRole' ] ]
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'tisitCodePipelineServiceRole' ] ]

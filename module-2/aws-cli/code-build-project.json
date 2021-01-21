@@ -1,5 +1,5 @@
 {
-  "name": "MythicalMysfitsServiceCodeBuildProject",
+  "name": "tisitServiceCodeBuildProject",
   "artifacts": {
     "type": "no_artifacts"
   },
@@ -10,18 +10,18 @@
     "environmentVariables": [
       {
         "name": "AWS_ACCOUNT_ID",
-        "value": "REPLACE_ME_ACCOUNT_ID"
+        "value": "552435391670"
       },
       {
         "name": "AWS_DEFAULT_REGION",
-        "value": "REPLACE_ME_REGION"
+        "value": "us-east-2"
       }
     ],
     "type": "LINUX_CONTAINER"
   },
-  "serviceRole": "REPLACE_ME_CODEBUILD_ROLE_ARN",
+  "serviceRole": "arn:aws:iam::552435391670:role/tisitServiceCodeBuildServiceRole",
   "source": {
     "type": "CODECOMMIT",
-    "location": "https://git-codecommit.REPLACE_ME_REGION.amazonaws.com/v1/repos/MythicalMysfitsService-Repository"
+    "location": "https://git-codecommit.us-east-2.amazonaws.com/v1/repos/tisitService-Repository"
   }
 }

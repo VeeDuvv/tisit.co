@@ -5,8 +5,8 @@
         "Effect": "Allow",
         "Principal": {
           "AWS": [
-            "REPLACE_ME_CODEBUILD_ROLE_ARN",
-            "REPLACE_ME_CODEPIPELINE_ROLE_ARN"
+            "arn:aws:iam::552435391670:role/tisitServiceCodeBuildServiceRole",
+            "arn:aws:iam::552435391670:role/tisitServiceCodePipelineServiceRole"
           ]
         },
         "Action": [
@@ -15,8 +15,8 @@
           "s3:GetBucketVersioning"
         ],
         "Resource": [
-          "arn:aws:s3:::REPLACE_ME_ARTIFACTS_BUCKET_NAME/*",
-          "arn:aws:s3:::REPLACE_ME_ARTIFACTS_BUCKET_NAME"
+          "arn:aws:s3:::tisits3cicd/*",
+          "arn:aws:s3:::tisits3cicd"
         ]
       },
       {
@@ -24,14 +24,14 @@
         "Effect": "Allow",
         "Principal": {
           "AWS": [
-            "REPLACE_ME_CODEBUILD_ROLE_ARN",
-            "REPLACE_ME_CODEPIPELINE_ROLE_ARN"
+            "arn:aws:iam::552435391670:role/tisitServiceCodeBuildServiceRole",
+            "arn:aws:iam::552435391670:role/tisitServiceCodePipelineServiceRole"
           ]
         },
         "Action": "s3:PutObject",
         "Resource": [
-          "arn:aws:s3:::REPLACE_ME_ARTIFACTS_BUCKET_NAME/*",
-          "arn:aws:s3:::REPLACE_ME_ARTIFACTS_BUCKET_NAME"
+          "arn:aws:s3:::tisits3cicd/*",
+          "arn:aws:s3:::tisits3cicd"
         ]
       }
     ]

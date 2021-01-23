@@ -9,32 +9,32 @@ import argparse
 # DynamoDB, so no credentials need to be stored/managed at all by our code!
 client = boto3.client('dynamodb')
 
-def getMysfitsJson(items):
-    # loop through the returned mysfits and add their attributes to a new dict
+def getTisitsJson(items):
+    # loop through the returned tisits and add their attributes to a new dict
     # that matches the JSON response structure expected by the frontend.
-    mysfitList = defaultdict(list)
+    tisitList = defaultdict(list)
 
     for item in items:
-        mysfit = {}
+        tisit = {}
 
-        mysfit["mysfitId"] = item["MysfitId"]["S"]
-        mysfit["name"] = item["Name"]["S"]
-        mysfit["species"] = item["Species"]["S"]
-        mysfit["description"] = item["Description"]["S"]
-        mysfit["age"] = int(item["Age"]["N"])
-        mysfit["goodevil"] = item["GoodEvil"]["S"]
-        mysfit["lawchaos"] = item["LawChaos"]["S"]
-        mysfit["thumbImageUri"] = item["ThumbImageUri"]["S"]
-        mysfit["profileImageUri"] = item["ProfileImageUri"]["S"]
-        mysfit["likes"] = item["Likes"]["N"]
-        mysfit["adopted"] = item["Adopted"]["BOOL"]
+        tisit["mysfitId"] = item["MysfitId"]["S"]
+        tisit["name"] = item["Name"]["S"]
+        tisit["species"] = item["Species"]["S"]
+        tisit["description"] = item["Description"]["S"]
+        tisit["age"] = int(item["Age"]["N"])
+        tisit["goodevil"] = item["GoodEvil"]["S"]
+        tisit["lawchaos"] = item["LawChaos"]["S"]
+        tisit["thumbImageUri"] = item["ThumbImageUri"]["S"]
+        tisit["profileImageUri"] = item["ProfileImageUri"]["S"]
+        tisit["likes"] = item["Likes"]["N"]
+        tisit["adopted"] = item["Adopted"]["BOOL"]
 
-        mysfitList["mysfits"].append(mysfit)
+        tisitList["tisits"].append(tisit)
 
-    return mysfitList
+    return tisitList
 
-def getAllMysfits():
-    # Retrieve all Mysfits from DynamoDB using the DynamoDB scan operation.
+def getAllTisits():
+    # Retrieve all Tisits from DynamoDB using the DynamoDB scan operation.
     # Note: The scan API can be expensive in terms of latency when a DynamoDB
     # table contains a high number of records and filters are applied to the
     # operation that require a large amount of data to be scanned in the table
@@ -42,25 +42,25 @@ def getAllMysfits():
     # receive many requests, it is common to store the result of frequent/common
     # scan operations in an in-memory cache. DynamoDB Accelerator (DAX) or
     # use of ElastiCache can provide these benefits. But, because out Mythical
-    # Mysfits API is low traffic and the table is very small, the scan operation
+    # Tisits API is low traffic and the table is very small, the scan operation
     # will suit our needs for this workshop.
     response = client.scan(
-        TableName='MysfitsTable'
+        TableName='tisitTable'
     )
 
     logging.info(response["Items"])
 
-    # loop through the returned mysfits and add their attributes to a new dict
+    # loop through the returned tisits and add their attributes to a new dict
     # that matches the JSON response structure expected by the frontend.
-    mysfitList = getMysfitsJson(response["Items"])
+    tisitList = getTisitsJson(response["Items"])
 
-    return json.dumps(mysfitList)
+    return json.dumps(tisitList)
 
-def queryMysfitItems(filter, value):
-    # Use the DynamoDB API Query to retrieve mysfits from the table that are
+def queryTisitItems(filter, value):
+    # Use the DynamoDB API Query to retrieve tisits from the table that are
     # equal to the selected filter values.
     response = client.query(
-        TableName='MysfitsTable',
+        TableName='TisitsTable',
         IndexName=filter+'Index',
         KeyConditions={
             filter: {
@@ -74,21 +74,21 @@ def queryMysfitItems(filter, value):
         }
     )
 
-    # loop through the returned mysfits and add their attributes to a new dict
+    # loop through the returned tisits and add their attributes to a new dict
     # that matches the JSON response structure expected by the frontend.
-    mysfitList = getMysfitsJson(response["Items"])
+    tisitList = getTisitsJson(response["Items"])
 
     # convert the create list of dicts in to JSON
-    return json.dumps(mysfitList)
+    return json.dumps(tisitList)
 
-def queryMysfits(queryParam):
+def queryTisits(queryParam):
 
     logging.info(json.dumps(queryParam))
 
     filter = queryParam['filter']
     value = queryParam['value']
 
-    return queryMysfitItems(filter, value)
+    return queryTisitItems(filter, value)
 
 # So we can test from the command line
 if __name__ == "__main__":
@@ -106,9 +106,9 @@ if __name__ == "__main__":
 
         print('Getting filtered values')
 
-        items = queryMysfitItems(args.filter, args.value)
+        items = queryTisitItems(args.filter, args.value)
     else:
         print("Getting all values")
-        items = getAllMysfits()
+        items = getAllTisits()
 
     print(items)

@@ -1,5 +1,5 @@
 {
-  "TableName": "MysfitsTable",
+  "TableName": "tisitTable",
   "ProvisionedThroughput": {
     "ReadCapacityUnits": 5,
     "WriteCapacityUnits": 5

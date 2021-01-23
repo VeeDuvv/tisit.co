@@ -1,7 +1,7 @@
 {
     "swagger": 2.0,
     "info": {
-        "title": "MysfitsApi"
+        "title": "TisitsApi"
     },
     "securityDefinitions": {
         "MysfitsUserPoolAuthorizer": {
@@ -12,7 +12,7 @@
             "x-amazon-apigateway-authorizer": {
                 "type": "COGNITO_USER_POOLS",
                 "providerARNs": [
-                    "arn:aws:cognito-idp:REPLACE_ME_REGION:REPLACE_ME_ACCOUNT_ID:userpool/REPLACE_ME_COGNITO_USER_POOL_ID"
+                    "arn:aws:cognito-idp:us-east-2:552435391670:userpool/us-east-2_AK7SP9ZOy"
                 ]
             }
         }
@@ -48,10 +48,10 @@
                             }
                         }
                     },
-                    "connectionId": "REPLACE_ME_VPC_LINK_ID",
+                    "connectionId": "gaa9ek",
                     "httpMethod": "GET",
                     "type": "HTTP_PROXY",
-                    "uri": "http://REPLACE_ME_NLB_DNS/"
+                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/"
                 }
             },
             "options": {
@@ -103,7 +103,7 @@
                 }
             }
         },
-        "/mysfits": {
+        "/tisits": {
             "get": {
                 "responses": {
                     "200": {
@@ -123,10 +123,10 @@
                 },
                 "x-amazon-apigateway-integration": {
                     "connectionType": "VPC_LINK",
-                    "connectionId": "REPLACE_ME_VPC_LINK_ID",
+                    "connectionId": "gaa9ek",
                     "httpMethod": "GET",
                     "type": "HTTP_PROXY",
-                    "uri": "http://REPLACE_ME_NLB_DNS/mysfits",
+                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits",
                     "responses": {
                         "default": {
                             "statusCode": "200",
@@ -188,7 +188,7 @@
                 }
             }
         },
-        "/mysfits/{mysfitId}": {
+        "/tisits/{mysfitId}": {
             "get": {
                 "parameters": [{
                     "name": "mysfitId",
@@ -217,10 +217,10 @@
                         "integration.request.path.mysfitId": "method.request.path.mysfitId"
                     },
                     "connectionType": "VPC_LINK",
-                    "connectionId": "REPLACE_ME_VPC_LINK_ID",
+                    "connectionId": "gaa9ek",
                     "httpMethod": "GET",
                     "type": "HTTP_PROXY",
-                    "uri": "http://REPLACE_ME_NLB_DNS/mysfits/{mysfitId}",
+                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{mysfitId}",
                     "responses": {
                         "default": {
                             "statusCode": "200",
@@ -282,7 +282,7 @@
                 }
             }
         },
-        "/mysfits/{mysfitId}/adopt": {
+        "/tisits/{mysfitId}/adopt": {
             "post": {
                 "parameters": [{
                     "name": "mysfitId",
@@ -316,10 +316,10 @@
                         "integration.request.path.mysfitId": "method.request.path.mysfitId"
                     },
                     "connectionType": "VPC_LINK",
-                    "connectionId": "REPLACE_ME_VPC_LINK_ID",
+                    "connectionId": "gaa9ek",
                     "httpMethod": "POST",
                     "type": "HTTP_PROXY",
-                    "uri": "http://REPLACE_ME_NLB_DNS/mysfits/{mysfitId}/adopt",
+                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{mysfitId}/adopt",
                     "responses": {
                         "default": {
                             "statusCode": "200",
@@ -381,7 +381,7 @@
                 }
             }
         },
-        "/mysfits/{mysfitId}/like": {
+        "/tisits/{mysfitId}/like": {
             "post": {
                 "parameters": [{
                     "name": "mysfitId",
@@ -425,7 +425,7 @@
                         "integration.request.path.mysfitId": "method.request.path.mysfitId"
                     },
                     "connectionType": "VPC_LINK",
-                    "connectionId": "REPLACE_ME_VPC_LINK_ID",
+                    "connectionId": "gaa9ek",
                     "httpMethod": "POST",
                     "security": [{
                         "MysfitsUserPoolAuthorizer": [
@@ -433,7 +433,7 @@
                         ]
                     }],
                     "type": "HTTP_PROXY",
-                    "uri": "http://REPLACE_ME_NLB_DNS/mysfits/{mysfitId}/like",
+                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{mysfitId}/like",
                     "responses": {
                         "default": {
                             "statusCode": "200",

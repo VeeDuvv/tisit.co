@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, json, Response, request
 from flask_cors import CORS
-import mysfitsTableClient
+import tisitTableClient
 
 app = Flask(__name__)
 CORS(app)
@@ -9,12 +9,12 @@ CORS(app)
 # sent to the service root will receive a healthy response.
 @app.route("/")
 def healthCheckResponse():
-    return jsonify({"message" : "Nothing here, used for health check. Try /mysfits instead."})
+    return jsonify({"message" : "Nothing here, used for health check. Try /tisits instead."})
 
-# Retrive mysfits from DynamoDB based on provided querystring params, or all
-# mysfits if no querystring is present.
-@app.route("/mysfits", methods=['GET'])
-def getMysfits():
+# Retrive tisits from DynamoDB based on provided querystring params, or all
+# tisits if no querystring is present.
+@app.route("/tisits", methods=['GET'])
+def getTisits():
 
     filterCategory = request.args.get('filter')
     if filterCategory:
@@ -23,9 +23,9 @@ def getMysfits():
             'filter': filterCategory,
             'value': filterValue
         }
-        serviceResponse = mysfitsTableClient.queryMysfits(queryParam)
+        serviceResponse = tisitTableClient.queryTisits(queryParam)
     else:
-        serviceResponse = mysfitsTableClient.getAllMysfits()
+        serviceResponse = tisitTableClient.getAllTisits()
 
     flaskResponse = Response(serviceResponse)
     flaskResponse.headers["Content-Type"] = "application/json"
@@ -34,9 +34,9 @@ def getMysfits():
 
 # retrieve the full details for a specific mysfit with their provided path
 # parameter as their ID.
-@app.route("/mysfits/<mysfitId>", methods=['GET'])
-def getMysfit(mysfitId):
-    serviceResponse = mysfitsTableClient.getMysfit(mysfitId)
+@app.route("/tisits/<mysfitId>", methods=['GET'])
+def getTisit(mysfitId):
+    serviceResponse = tisitTableClient.getTisit(mysfitId)
 
     flaskResponse = Response(serviceResponse)
     flaskResponse.headers["Content-Type"] = "application/json"
@@ -44,9 +44,9 @@ def getMysfit(mysfitId):
     return flaskResponse
 
 # increment the number of likes for the provided mysfit.
-@app.route("/mysfits/<mysfitId>/like", methods=['POST'])
-def likeMysfit(mysfitId):
-    serviceResponse = mysfitsTableClient.likeMysfit(mysfitId)
+@app.route("/tisits/<mysfitId>/like", methods=['POST'])
+def likeTisit(mysfitId):
+    serviceResponse = tisitTableClient.likeTisit(mysfitId)
 
     flaskResponse = Response(serviceResponse)
     flaskResponse.headers["Content-Type"] = "application/json"
@@ -54,9 +54,9 @@ def likeMysfit(mysfitId):
     return flaskResponse
 
 # indicate that the provided mysfit should be marked as adopted.
-@app.route("/mysfits/<mysfitId>/adopt", methods=['POST'])
-def adoptMysfit(mysfitId):
-    serviceResponse = mysfitsTableClient.adoptMysfit(mysfitId)
+@app.route("/tisits/<mysfitId>/adopt", methods=['POST'])
+def adoptTisit(mysfitId):
+    serviceResponse = tisitTableClient.adoptTisit(mysfitId)
 
     flaskResponse = Response(serviceResponse)
     flaskResponse.headers["Content-Type"] = "application/json"

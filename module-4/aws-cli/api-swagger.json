@@ -4,7 +4,7 @@
         "title": "TisitsApi"
     },
     "securityDefinitions": {
-        "MysfitsUserPoolAuthorizer": {
+        "TisitUserPoolAuthorizer": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header",
@@ -188,10 +188,10 @@
                 }
             }
         },
-        "/tisits/{mysfitId}": {
+        "/tisits/{TisitID}": {
             "get": {
                 "parameters": [{
-                    "name": "mysfitId",
+                    "name": "TisitID",
                     "in": "path",
                     "required": true,
                     "type": "string"
@@ -214,13 +214,13 @@
                 },
                 "x-amazon-apigateway-integration": {
                     "requestParameters": {
-                        "integration.request.path.mysfitId": "method.request.path.mysfitId"
+                        "integration.request.path.TisitID": "method.request.path.TisitID"
                     },
                     "connectionType": "VPC_LINK",
                     "connectionId": "gaa9ek",
                     "httpMethod": "GET",
                     "type": "HTTP_PROXY",
-                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{mysfitId}",
+                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{TisitID}",
                     "responses": {
                         "default": {
                             "statusCode": "200",
@@ -282,10 +282,10 @@
                 }
             }
         },
-        "/tisits/{mysfitId}/adopt": {
+        "/tisits/{TisitID}/adopt": {
             "post": {
                 "parameters": [{
-                    "name": "mysfitId",
+                    "name": "TisitID",
                     "in": "path",
                     "required": true,
                     "type": "string"
@@ -307,19 +307,19 @@
                     }
                 },
                 "security": [{
-                    "MysfitsUserPoolAuthorizer": [
+                    "TisitUserPoolAuthorizer": [
 
                     ]
                 }],
                 "x-amazon-apigateway-integration": {
                     "requestParameters": {
-                        "integration.request.path.mysfitId": "method.request.path.mysfitId"
+                        "integration.request.path.TisitID": "method.request.path.TisitID"
                     },
                     "connectionType": "VPC_LINK",
                     "connectionId": "gaa9ek",
                     "httpMethod": "POST",
                     "type": "HTTP_PROXY",
-                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{mysfitId}/adopt",
+                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{TisitID}/adopt",
                     "responses": {
                         "default": {
                             "statusCode": "200",
@@ -381,10 +381,10 @@
                 }
             }
         },
-        "/tisits/{mysfitId}/like": {
+        "/tisits/{TisitID}/like": {
             "post": {
                 "parameters": [{
-                    "name": "mysfitId",
+                    "name": "TisitID",
                     "in": "path",
                     "required": true,
                     "type": "string"
@@ -406,7 +406,7 @@
                     }
                 },
                 "security": [{
-                    "MysfitsUserPoolAuthorizer": [
+                    "TisitUserPoolAuthorizer": [
 
                     ]
                 }],
@@ -422,18 +422,18 @@
                         }
                     },
                     "requestParameters": {
-                        "integration.request.path.mysfitId": "method.request.path.mysfitId"
+                        "integration.request.path.TisitID": "method.request.path.TisitID"
                     },
                     "connectionType": "VPC_LINK",
                     "connectionId": "gaa9ek",
                     "httpMethod": "POST",
                     "security": [{
-                        "MysfitsUserPoolAuthorizer": [
+                        "TisitUserPoolAuthorizer": [
 
                         ]
                     }],
                     "type": "HTTP_PROXY",
-                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{mysfitId}/like",
+                    "uri": "http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com/tisits/{TisitID}/like",
                     "responses": {
                         "default": {
                             "statusCode": "200",

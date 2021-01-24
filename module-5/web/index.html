@@ -99,8 +99,8 @@
               <br>
               <b>Lawful/Chaotic:</b> {{tisit.lawchaos}}
               <span style="float:right;">
-                <img id="{{tisit.mysfitId}}LikeIcon" ng-click="likeClicked(tisit.mysfitId)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
-                <img id="{{tisit.mysfitId}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
+                <img id="{{tisit.TisitID}}LikeIcon" ng-click="likeClicked(tisit.TisitID)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
+                <img id="{{tisit.TisitID}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
               </span>
             </p>
         </div>
@@ -131,7 +131,7 @@
             <p id="profileDescription"><b>Description:</b> {{profileTisit.description}}</p>
             <p id="profileLikes"><b>Likes:</b> {{profileTisit.likes}}</p>
             <p align="center">
-              <button id="adoptButton" align="center" type="button" ng-click="adoptClicked(profileTisit.mysfitId)" class="btn btn-primary">Adopt Me Now!</button>
+              <button id="adoptButton" align="center" type="button" ng-click="adoptClicked(profileTisit.TisitID)" class="btn btn-primary">Adopt Me Now!</button>
               <button id="alreadyAdoptedButton" align="center" type="button" class="btn btn-primary d-none" disabled>Mysfit Adopted!</button>
             </p>
           </div>
@@ -394,9 +394,9 @@
 
 
 
-      $scope.likeClicked = function(mysfitId) {
-        console.log("clicked: " + mysfitId);
-        likeMysfit(mysfitId, updateLikeIcons);
+      $scope.likeClicked = function(TisitID) {
+        console.log("clicked: " + TisitID);
+        likeMysfit(TisitID, updateLikeIcons);
       }
 
     });
@@ -405,9 +405,9 @@
 
       profileScope = $scope;
 
-      $scope.adoptClicked = function(mysfitId) {
-        console.log("adopt clicked: " +  mysfitId);
-        adoptMysfit(mysfitId, markAdopted);
+      $scope.adoptClicked = function(TisitID) {
+        console.log("adopt clicked: " +  TisitID);
+        adoptMysfit(TisitID, markAdopted);
       }
 
     });
@@ -419,9 +419,9 @@
     */
     $('#profileModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
-      var mysfitId = button.data('mysfitid');
-      getMysfit(mysfitId, updateModalText);
-      recordProfileClick(mysfitId)
+      var TisitID = button.data('TisitID');
+      getMysfit(TisitID, updateModalText);
+      recordProfileClick(TisitID)
 
 
     });
@@ -448,12 +448,12 @@
       $("#alreadyAdoptedButton").addClass("d-none");
     }
 
-    function updateLikeIcons(mysfitId) {
+    function updateLikeIcons(TisitID) {
 
-      likeIconId = "#" + mysfitId + "LikeIcon";
+      likeIconId = "#" + TisitID + "LikeIcon";
       $(likeIconId).addClass("d-none");
 
-      alreadyLikedIconId = "#" + mysfitId + "AlreadyLikedIcon";
+      alreadyLikedIconId = "#" + TisitID + "AlreadyLikedIcon";
       $(alreadyLikedIconId).removeClass("d-none");
 
     }
@@ -468,10 +468,10 @@
       profileScope.$apply();
     }
 
-    function likeMysfit(mysfitId, callback) {
+    function likeMysfit(TisitID, callback) {
 
       try {
-        var tisitsApi = tisitsApiEndpoint + '/tisits/' + mysfitId + "/like";
+        var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID + "/like";
 
         var sessionTokensString = localStorage.getItem('sessionTokens');
         var sessionTokens = JSON.parse(sessionTokensString);
@@ -483,8 +483,8 @@
           type : 'POST',
           headers : {'Authorization' : idJwt },
           success : function(response) {
-            console.log("here" + mysfitId);
-            callback(mysfitId);
+            console.log("here" + TisitID);
+            callback(TisitID);
           },
           error : function(response) {
             console.log("could not like tisit");
@@ -501,10 +501,10 @@
 
     }
 
-    function adoptMysfit(mysfitId, callback) {
+    function adoptMysfit(TisitID, callback) {
 
       try {
-        var tisitsApi = tisitsApiEndpoint + '/tisits/' + mysfitId + "/adopt";
+        var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID + "/adopt";
 
         var sessionTokensString = localStorage.getItem('sessionTokens');
         var sessionTokens = JSON.parse(sessionTokensString);
@@ -552,9 +552,9 @@
       });
     }
 
-    function getMysfit(mysfitId, callback) {
+    function getMysfit(TisitID, callback) {
 
-      var tisitsApi = tisitsApiEndpoint + '/tisits/' + mysfitId;
+      var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID;
 
       $.ajax({
         url : tisitsApi,
@@ -574,7 +574,7 @@
   /*
    The new JavaScript function created for module-5 that records profile clicks.
   */
-  function recordProfileClick(clickedMysfitId) {
+  function recordProfileClick(clickedTisitID) {
 
     var clicksApi = streamingApiEndpoint + '/clicks';
     var userClick;
@@ -586,7 +586,7 @@
 
     userClick = {
       userId: currentUserId,
-      mysfitId: clickedMysfitId
+      TisitID: clickedTisitID
     }
 
     console.log('Recording profile click: ' + userClick);

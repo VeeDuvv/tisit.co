@@ -34,9 +34,9 @@ def getTisits():
 
 # retrieve the full details for a specific mysfit with their provided path
 # parameter as their ID.
-@app.route("/tisits/<mysfitId>", methods=['GET'])
-def getTisit(mysfitId):
-    serviceResponse = tisitTableClient.getTisit(mysfitId)
+@app.route("/tisits/<TisitID>", methods=['GET'])
+def getTisit(TisitID):
+    serviceResponse = tisitTableClient.getTisit(TisitID)
 
     flaskResponse = Response(serviceResponse)
     flaskResponse.headers["Content-Type"] = "application/json"
@@ -44,9 +44,9 @@ def getTisit(mysfitId):
     return flaskResponse
 
 # increment the number of likes for the provided mysfit.
-@app.route("/tisits/<mysfitId>/like", methods=['POST'])
-def likeTisit(mysfitId):
-    serviceResponse = tisitTableClient.likeTisit(mysfitId)
+@app.route("/tisits/<TisitID>/like", methods=['POST'])
+def likeTisit(TisitID):
+    serviceResponse = tisitTableClient.likeTisit(TisitID)
 
     flaskResponse = Response(serviceResponse)
     flaskResponse.headers["Content-Type"] = "application/json"
@@ -54,9 +54,9 @@ def likeTisit(mysfitId):
     return flaskResponse
 
 # indicate that the provided mysfit should be marked as adopted.
-@app.route("/tisits/<mysfitId>/adopt", methods=['POST'])
-def adoptTisit(mysfitId):
-    serviceResponse = tisitTableClient.adoptTisit(mysfitId)
+@app.route("/tisits/<TisitID>/adopt", methods=['POST'])
+def adoptTisit(TisitID):
+    serviceResponse = tisitTableClient.adoptTisit(TisitID)
 
     flaskResponse = Response(serviceResponse)
     flaskResponse.headers["Content-Type"] = "application/json"

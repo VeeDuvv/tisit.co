@@ -10,9 +10,9 @@ import json
 import requests
 
 # Send a request to the Tisits Service API that we have created in previous
-# modules to retrieve all of the attributes for the included TisitId.
-def retrieveTisit(mysfitId):
-    apiEndpoint = 'https://3e40hksdl5.execute-api.us-east-2.amazonaws.com/prod' + '/tisits/' + str(mysfitId) # eg: 'https://ljqomqjzbf.execute-api.us-east-1.amazonaws.com/prod/'
+# modules to retrieve all of the attributes for the included TisitID.
+def retrieveTisit(TisitID):
+    apiEndpoint = 'https://3e40hksdl5.execute-api.us-east-2.amazonaws.com/prod' + '/tisits/' + str(TisitID) # eg: 'https://ljqomqjzbf.execute-api.us-east-1.amazonaws.com/prod/'
     mysfit = requests.get(apiEndpoint).json()
     return mysfit
 
@@ -31,12 +31,12 @@ def processRecord(event, context):
         # so we must decode the data first to retrieve the click record.
         click = json.loads(base64.b64decode(record['data']))
 
-        mysfitId = click['mysfitId']
-        mysfit = retrieveTisit(mysfitId)
+        TisitID = click['TisitID']
+        mysfit = retrieveTisit(TisitID)
 
         enrichedClick = {
                 'userId': click['userId'],
-                'mysfitId': mysfitId,
+                'TisitID': TisitID,
                 'goodevil': mysfit['goodevil'],
                 'lawchaos': mysfit['lawchaos'],
                 'species': mysfit['species']

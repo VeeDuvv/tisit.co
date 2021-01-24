@@ -109,7 +109,7 @@ Resources:
       Runtime: python3.6
       CodeUri: .
       Description: An Amazon Kinesis Firehose stream processor that enriches click
-                   records to not just include a mysfitId, but also other
+                   records to not just include a TisitID, but also other
                    attributes that can be analyzed later.
       MemorySize: 128
       Timeout: 30

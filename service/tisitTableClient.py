@@ -31,7 +31,7 @@ def getAllTisits():
     tisitList = defaultdict(list)
     for item in response["Items"]:
         tisit = {}
-        tisit["mysfitId"] = item["MysfitId"]["S"]
+        tisit["TisitID"] = item["TisitID"]["S"]
         tisit["name"] = item["Name"]["S"]
         tisit["goodevil"] = item["GoodEvil"]["S"]
         tisit["lawchaos"] = item["LawChaos"]["S"]
@@ -66,7 +66,7 @@ def queryTisits(queryParam):
     tisitList = defaultdict(list)
     for item in response["Items"]:
         tisit = {}
-        tisit["mysfitId"] = item["MysfitId"]["S"]
+        tisit["TisitID"] = item["TisitID"]["S"]
         tisit["name"] = item["Name"]["S"]
         tisit["goodevil"] = item["GoodEvil"]["S"]
         tisit["lawchaos"] = item["LawChaos"]["S"]
@@ -76,8 +76,8 @@ def queryTisits(queryParam):
 
     return json.dumps(tisitList)
 
-# Retrive a single tisit from DynamoDB using their unique mysfitId
-def getTisit(mysfitId):
+# Retrive a single tisit from DynamoDB using their unique TisitID
+def getTisit(TisitID):
 
     # use the DynamoDB API GetItem, which gives you the ability to retrieve
     # a single item from a DynamoDB table using its unique key with super
@@ -85,8 +85,8 @@ def getTisit(mysfitId):
     response = client.get_item(
         TableName='tisitTable',
         Key={
-            'MysfitId': {
-                'S': mysfitId
+            'TisitID': {
+                'S': TisitID
             }
         }
     )
@@ -94,7 +94,7 @@ def getTisit(mysfitId):
     item = response["Item"]
 
     tisit = {}
-    tisit["mysfitId"] = item["MysfitId"]["S"]
+    tisit["TisitID"] = item["TisitID"]["S"]
     tisit["name"] = item["Name"]["S"]
     tisit["age"] = int(item["Age"]["N"])
     tisit["goodevil"] = item["GoodEvil"]["S"]
@@ -109,15 +109,15 @@ def getTisit(mysfitId):
     return json.dumps(tisit)
 
 # increment the number of likes for a tisit by 1
-def likeTisit(mysfitId):
+def likeTisit(TisitID):
 
     # Use the DynamoDB API UpdateItem to increment the number of Likes
     # the tisit has by 1 using an UpdateExpression.
     response = client.update_item(
         TableName='tisitTable',
         Key={
-            'MysfitId': {
-                'S': mysfitId
+            'TisitID': {
+                'S': TisitID
             }
         },
         UpdateExpression="SET Likes = Likes + :n",
@@ -130,15 +130,15 @@ def likeTisit(mysfitId):
     return json.dumps(response)
 
 # mark a tisit as adopted
-def adoptTisit(mysfitId):
+def adoptTisit(TisitID):
 
     # Use the DynamoDB API UpdateItem to set the value of the tisit's
     # Adopted attribute to True using an UpdateExpression.
     response = client.update_item(
         TableName='tisitTable',
         Key={
-            'MysfitId': {
-                'S': mysfitId
+            'TisitID': {
+                'S': TisitID
             }
         },
         UpdateExpression="SET Adopted = :b",

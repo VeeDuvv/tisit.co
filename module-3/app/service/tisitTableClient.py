@@ -17,7 +17,7 @@ def getTisitsJson(items):
     for item in items:
         tisit = {}
 
-        tisit["mysfitId"] = item["MysfitId"]["S"]
+        tisit["TisitID"] = item["TisitID"]["S"]
         tisit["name"] = item["Name"]["S"]
         tisit["species"] = item["Species"]["S"]
         tisit["description"] = item["Description"]["S"]

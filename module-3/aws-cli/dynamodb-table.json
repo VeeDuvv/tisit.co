@@ -6,7 +6,7 @@
   },
   "AttributeDefinitions": [
     {
-      "AttributeName": "MysfitId",
+      "AttributeName": "TisitID",
       "AttributeType": "S"
     },
     {
@@ -20,7 +20,7 @@
   ],
   "KeySchema": [
     {
-      "AttributeName": "MysfitId",
+      "AttributeName": "TisitID",
       "KeyType": "HASH"
     }
   ],
@@ -33,7 +33,7 @@
           "KeyType": "HASH"
         },
         {
-          "AttributeName": "MysfitId",
+          "AttributeName": "TisitID",
           "KeyType": "RANGE"
         }
       ],
@@ -53,7 +53,7 @@
           "KeyType": "HASH"
         },
         {
-          "AttributeName": "MysfitId",
+          "AttributeName": "TisitID",
           "KeyType": "RANGE"
         }
       ],

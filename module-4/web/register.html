@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <!--
-    A registration page where users who wish you use Mythical Mysfits can
+    A registration page where users who wish you use Tisit can
     register with the email address and a password.  The JavaScript below
     uses the Amazon Cognito JavaScript SDK in order to integrate with the service.
   -->
   <head>
-    <title>Register for Mythical Mysfits</title>
+    <title>Register for Tisit</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -21,7 +21,7 @@
       <img src="https://www.mythicalmysfits.com/images/mysfits_banner.gif" width="800px" align="center">
     </div>
     <div class="container">
-      <h3>Register for Mythical Mysfits!</h3>
+      <h3>Register for Tisit!</h3>
       <form id="userDetails" >
         <div class="form-group">
           <label for="email">Email:</label>
@@ -43,8 +43,8 @@
 
   <script>
 
-  var cognitoUserPoolId = 'REPLACE_ME';  // example: 'us-east-1_abcd12345'
-  var cognitoUserPoolClientId = 'REPLACE_ME'; // example: 'abcd12345abcd12345abcd12345'
+  var cognitoUserPoolId = 'us-east-2_AK7SP9ZOy';  // example: 'us-east-1_abcd12345'
+  var cognitoUserPoolClientId = '3ish7nal4ngbupng48mcue1e37'; // example: 'abcd12345abcd12345abcd12345'
 
   $(document).on('click', '.btn-info', function(event) {
     event.preventDefault();

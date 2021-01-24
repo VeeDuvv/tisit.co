@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <!--
-    A new version of the Mythical Mysfits website that has enabled user
+    A new version of the Tisit website that has enabled user
     registration and login, as well as the ability to logged in users to like
-    and mark mysfits as adopted.
+    and mark tisits as adopted.
   -->
   <head>
-    <title>Mythical Mysfits</title>
+    <title>Tisit</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -18,7 +18,7 @@
     <script src="js/aws-cognito-sdk.min.js"></script>
     <script src="js/amazon-cognito-identity.min.js"></script>
   </head>
-  <body ng-app="mysfitsApp" style="background-color:#EBEBEB">
+  <body ng-app="tisitsApp" style="background-color:#EBEBEB">
     <style>
       @media (max-width: 800px) {
       	img {
@@ -61,14 +61,14 @@
       </div>
     </div>
   </div>
-    <div class="container" ng-controller="mysfitsFilterController">
+    <div class="container" ng-controller="tisitsFilterController">
       <div id="filterMenu">
         <ul class="nav nav-pills">
           &nbsp;
           <li class="nav-item dropdown" ng-repeat="filterCategory in filterOptionsList.categories">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!" role="button" aria-haspopup="true" aria-expanded="false">{{filterCategory.title}}</a>
             <div class="dropdown-menu" >
-              <button class="dropdown-item" ng-repeat="filterCategorySelection in filterCategory.selections" ng-click="queryMysfits(filterCategory.title, filterCategorySelection)">{{filterCategorySelection}}</button>
+              <button class="dropdown-item" ng-repeat="filterCategorySelection in filterCategory.selections" ng-click="queryTisits(filterCategory.title, filterCategorySelection)">{{filterCategorySelection}}</button>
             </div>
           </li>
           &nbsp;
@@ -80,38 +80,38 @@
     </div>
     <br>
     <div class="container">
-      <div id="mysfitsGrid" class="row" ng-controller="mysfitsListController">
-        <div class="col-md-4 border border-warning" ng-repeat="mysfit in mysfits">
+      <div id="tisitsGrid" class="row" ng-controller="tisitsListController">
+        <div class="col-md-4 border border-warning" ng-repeat="tisit in tisits">
             <br>
             <p align="center">
-              <strong> {{mysfit.name}}</strong>
+              <strong> {{tisit.name}}</strong>
               <br>
-              <img src="{{mysfit.thumbImageUri}}" alt="{{mysfit.Name}}">
+              <img src="{{tisit.thumbImageUri}}" alt="{{tisit.Name}}">
               <br>
               <br>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal" data-mysfitid="{{mysfit.mysfitId}}">View Profile</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal" data-mysfitid="{{tisit.mysfitId}}">View Profile</button>
             </p>
             <p>
               <br>
-              <b>Species:</b> {{mysfit.species}}
+              <b>Species:</b> {{tisit.species}}
               <br>
-              <b>Good/Evil:</b> {{mysfit.goodevil}}
+              <b>Good/Evil:</b> {{tisit.goodevil}}
               <br>
-              <b>Lawful/Chaotic:</b> {{mysfit.lawchaos}}
+              <b>Lawful/Chaotic:</b> {{tisit.lawchaos}}
               <span style="float:right;">
-                <img id="{{mysfit.mysfitId}}LikeIcon" ng-click="likeClicked(mysfit.mysfitId)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
-                <img id="{{mysfit.mysfitId}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
+                <img id="{{tisit.mysfitId}}LikeIcon" ng-click="likeClicked(tisit.mysfitId)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
+                <img id="{{tisit.mysfitId}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
               </span>
             </p>
         </div>
       </div>
     </div>
-    <div class="modal fade bd-example-modal-lg" id="profileModal" tabindex="-1" aria-hidden="true" ng-controller="mysfitProfileController">
+    <div class="modal fade bd-example-modal-lg" id="profileModal" tabindex="-1" aria-hidden="true" ng-controller="tisitProfileController">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h3>Mysfit Profile</h3>
+            <h3>Tisit Profile</h3>
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
               <span class="sr-only">Close</span>
@@ -120,19 +120,19 @@
         <!-- Modal Body -->
           <div class="modal-body">
             <p align="center">
-              <img id="profileImage" src="{{profileMysfit.profileImageUri}}" align="center" />
+              <img id="profileImage" src="{{profileTisit.profileImageUri}}" align="center" />
             </p>
             <br>
-            <p id="profileName"><b>Name:</b> {{profileMysfit.name}}</p>
-            <p id="profileSpecies"><b>Species:</b> {{profileMysfit.species}}</p>
-            <p id="profileGoodEvil"><b>Good/Evil:</b> {{profileMysfit.goodevil}} </p>
-            <p id="profileLawChaos"><b>Lawful/Chaotic:</b> {{profileMysfit.lawchaos}} </p>
-            <p id="profileAge"><b>Age:</b> {{profileMysfit.age}}</p>
-            <p id="profileDescription"><b>Description:</b> {{profileMysfit.description}}</p>
-            <p id="profileLikes"><b>Likes:</b> {{profileMysfit.likes}}</p>
+            <p id="profileName"><b>Name:</b> {{profileTisit.name}}</p>
+            <p id="profileSpecies"><b>Species:</b> {{profileTisit.species}}</p>
+            <p id="profileGoodEvil"><b>Good/Evil:</b> {{profileTisit.goodevil}} </p>
+            <p id="profileLawChaos"><b>Lawful/Chaotic:</b> {{profileTisit.lawchaos}} </p>
+            <p id="profileAge"><b>Age:</b> {{profileTisit.age}}</p>
+            <p id="profileDescription"><b>Description:</b> {{profileTisit.description}}</p>
+            <p id="profileLikes"><b>Likes:</b> {{profileTisit.likes}}</p>
             <p align="center">
-              <button id="adoptButton" align="center" type="button" ng-click="adoptClicked(profileMysfit.mysfitId)" class="btn btn-primary">Adopt Me Now!</button>
-              <button id="alreadyAdoptedButton" align="center" type="button" class="btn btn-primary d-none" disabled>Mysfit Adopted!</button>
+              <button id="adoptButton" align="center" type="button" ng-click="adoptClicked(profileTisit.mysfitId)" class="btn btn-primary">Adopt Me Now!</button>
+              <button id="alreadyAdoptedButton" align="center" type="button" class="btn btn-primary d-none" disabled>Tisit Adopted!</button>
             </p>
           </div>
           <div class="modal-footer">
@@ -149,12 +149,12 @@
   </body>
   <script>
 
-    var mysfitsApiEndpoint = 'REPLACE_ME'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
-    var cognitoUserPoolId = 'REPLACE_ME';  // example: 'us-east-1_abcd12345'
-    var cognitoUserPoolClientId = 'REPLACE_ME'; // example: 'abcd12345abcd12345abcd12345'
-    var awsRegion = 'REPLACE_ME'; // example: 'us-east-1' or 'eu-west-1' etc.
+    var tisitsApiEndpoint = 'http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
+    var cognitoUserPoolId = 'us-east-2_AK7SP9ZOy';  // example: 'us-east-1_abcd12345'
+    var cognitoUserPoolClientId = '3ish7nal4ngbupng48mcue1e37'; // example: 'abcd12345abcd12345abcd12345'
+    var awsRegion = 'us-east-2'; // example: 'us-east-1' or 'eu-west-1' etc.
 
-    var app = angular.module('mysfitsApp', []);
+    var app = angular.module('tisitsApp', []);
 
     var gridScope;
 
@@ -323,11 +323,11 @@
     app.controller('clearFilterController', function($scope) {
     });
 
-    app.controller('mysfitsFilterController', function($scope) {
+    app.controller('tisitsFilterController', function($scope) {
 
       filterScope = $scope;
 
-      // The possible options for Mysfits to populate the dropdown filters.
+      // The possible options for Tisits to populate the dropdown filters.
       $scope.filterOptionsList =
        {
          "categories": [
@@ -351,10 +351,10 @@
        };
 
        $scope.removeFilter = function() {
-         allMysfits = getAllMysfits(applyGridScope);
+         allTisits = getAllTisits(applyGridScope);
        }
 
-       $scope.queryMysfits = function(filterCategory, filterValue) {
+       $scope.queryTisits = function(filterCategory, filterValue) {
 
            var filterCategoryQS = "";
            if (filterCategory==="Good/Evil") {
@@ -362,16 +362,16 @@
            } else {
              filterCategoryQS = "LawChaos"
            }
-           var mysfitsApi = mysfitsApiEndpoint + '/mysfits?' + 'filter=' + filterCategoryQS + "&value=" + filterValue;
+           var tisitsApi = tisitsApiEndpoint + '/tisits?' + 'filter=' + filterCategoryQS + "&value=" + filterValue;
 
            $.ajax({
-             url : mysfitsApi,
+             url : tisitsApi,
              type : 'GET',
              success : function(response) {
-               applyGridScope(response.mysfits)
+               applyGridScope(response.tisits)
              },
              error : function(response) {
-               console.log("could not retrieve mysfits list.");
+               console.log("could not retrieve tisits list.");
                if (response.status == "401") {
                   refreshAWSCredentials();
                 }
@@ -383,11 +383,11 @@
 
     });
 
-    app.controller('mysfitsListController', function($scope) {
+    app.controller('tisitsListController', function($scope) {
 
       gridScope = $scope;
 
-      getAllMysfits(applyGridScope);
+      getAllTisits(applyGridScope);
 
 
 
@@ -398,13 +398,13 @@
 
     });
 
-    app.controller('mysfitProfileController', function($scope) {
+    app.controller('tisitProfileController', function($scope) {
 
       profileScope = $scope;
 
       $scope.adoptClicked = function(mysfitId) {
         console.log("adopt clicked: " +  mysfitId);
-        adoptMysfit(mysfitId, markAdopted);
+        adoptTisit(mysfitId, markAdopted);
       }
 
     });
@@ -412,16 +412,16 @@
     $('#profileModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var mysfitId = button.data('mysfitid');
-      getMysfit(mysfitId, updateModalText);
+      getTisit(mysfitId, updateModalText);
 
 
     });
 
-    function updateModalText(profileMysfit) {
+    function updateModalText(profileTisit) {
 
       applyProfileScope(profileMysfit);
 
-      if (profileMysfit.adopted == true) {
+      if (profileTisit.adopted == true) {
         markAdopted();
       } else {
         markNotAdopted();
@@ -449,20 +449,20 @@
 
     }
 
-    function applyGridScope(mysfitsList) {
-      gridScope.mysfits = mysfitsList;
+    function applyGridScope(tisitsList) {
+      gridScope.tisits = tisitsList;
       gridScope.$apply();
     }
 
-    function applyProfileScope(mysfit) {
-      profileScope.profileMysfit = mysfit;
+    function applyProfileScope(tisit) {
+      profileScope.profileMysfit = tisit;
       profileScope.$apply();
     }
 
-    function likeMysfit(mysfitId, callback) {
+    function likeTisit(mysfitId, callback) {
 
       try {
-        var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + mysfitId + "/like";
+        var tisitsApi = tisitsApiEndpoint + '/tisits/' + mysfitId + "/like";
 
         var sessionTokensString = localStorage.getItem('sessionTokens');
         var sessionTokens = JSON.parse(sessionTokensString);
@@ -470,7 +470,7 @@
         var idJwt = IdToken.jwtToken;
 
         $.ajax({
-          url : mysfitsApi,
+          url : tisitsApi,
           type : 'POST',
           headers : {'Authorization' : idJwt },
           success : function(response) {
@@ -478,7 +478,7 @@
             callback(mysfitId);
           },
           error : function(response) {
-            console.log("could not like mysfit");
+            console.log("could not like tisit");
             console.log(response);
             if (response.status == "401") {
                refreshAWSCredentials();
@@ -486,16 +486,16 @@
           }
         });
       } catch(err) {
-        alert("You must be logged in to like a mysfit.");
+        alert("You must be logged in to like a tisit.");
         console.log(err.message);
       }
 
     }
 
-    function adoptMysfit(mysfitId, callback) {
+    function adoptTisit(mysfitId, callback) {
 
       try {
-        var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + mysfitId + "/adopt";
+        var tisitsApi = tisitsApiEndpoint + '/tisits/' + mysfitId + "/adopt";
 
         var sessionTokensString = localStorage.getItem('sessionTokens');
         var sessionTokens = JSON.parse(sessionTokensString);
@@ -503,7 +503,7 @@
         var idJwt = IdToken.jwtToken;
 
         $.ajax({
-          url : mysfitsApi,
+          url : tisitsApi,
           async : false,
           type : 'POST',
           headers : {'Authorization' : idJwt },
@@ -511,31 +511,31 @@
             callback();
           },
           error : function(response) {
-            console.log("could not adopt mysfit");
+            console.log("could not adopt tisit");
             if (response.status == "401") {
                refreshAWSCredentials();
              }
           }
         });
       } catch (err) {
-        alert("You must be logged in to adopt a mysfit.");
+        alert("You must be logged in to adopt a tisit.");
         console.log(err.message);
       }
 
     }
 
-    function getAllMysfits(callback) {
+    function getAllTisits(callback) {
 
-      var mysfitsApi = mysfitsApiEndpoint + '/mysfits';
+      var tisitsApi = tisitsApiEndpoint + '/tisits';
 
       $.ajax({
-        url : mysfitsApi,
+        url : tisitsApi,
         type : 'GET',
         success : function(response) {
-          callback(response.mysfits);
+          callback(response.tisits);
         },
         error : function(response) {
-          console.log("could not retrieve mysfits list.");
+          console.log("could not retrieve tisits list.");
           if (response.status == "401") {
              refreshAWSCredentials();
            }
@@ -543,18 +543,18 @@
       });
     }
 
-    function getMysfit(mysfitId, callback) {
+    function getTisit(mysfitId, callback) {
 
-      var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + mysfitId;
+      var tisitsApi = tisitsApiEndpoint + '/tisits/' + mysfitId;
 
       $.ajax({
-        url : mysfitsApi,
+        url : tisitsApi,
         type : 'GET',
         success : function(response) {
           callback(response);
         },
         error : function(response) {
-          console.log("could not retrieve mysfits list.");
+          console.log("could not retrieve tisits list.");
           if (response.status == "401") {
              refreshAWSCredentials();
            }

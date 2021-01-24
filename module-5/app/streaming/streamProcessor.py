@@ -9,10 +9,10 @@ import json
 
 import requests
 
-# Send a request to the Mysfits Service API that we have created in previous
-# modules to retrieve all of the attributes for the included MysfitId.
-def retrieveMysfit(mysfitId):
-    apiEndpoint = 'REPLACE_ME_API_ENDPOINT' + '/mysfits/' + str(mysfitId) # eg: 'https://ljqomqjzbf.execute-api.us-east-1.amazonaws.com/prod/'
+# Send a request to the Tisits Service API that we have created in previous
+# modules to retrieve all of the attributes for the included TisitId.
+def retrieveTisit(mysfitId):
+    apiEndpoint = 'https://3e40hksdl5.execute-api.us-east-2.amazonaws.com/prod' + '/tisits/' + str(mysfitId) # eg: 'https://ljqomqjzbf.execute-api.us-east-1.amazonaws.com/prod/'
     mysfit = requests.get(apiEndpoint).json()
     return mysfit
 
@@ -32,7 +32,7 @@ def processRecord(event, context):
         click = json.loads(base64.b64decode(record['data']))
 
         mysfitId = click['mysfitId']
-        mysfit = retrieveMysfit(mysfitId)
+        mysfit = retrieveTisit(mysfitId)
 
         enrichedClick = {
                 'userId': click['userId'],

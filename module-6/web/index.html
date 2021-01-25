@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <!--
-      A new version of the Mythical Mysfits API that includes updated JavaScript
-      code to send an additional PUT request whenever a mysfit profile is viewed
+      A new version of the Tisits API that includes updated JavaScript
+      code to send an additional PUT request whenever a tisit profile is viewed
       by a user.
     -->
-    <title>Mythical Mysfits</title>
+    <title>Tisits</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -18,7 +18,7 @@
     <script src="js/aws-cognito-sdk.min.js"></script>
     <script src="js/amazon-cognito-identity.min.js"></script>
   </head>
-  <body ng-app="mysfitsApp" style="background-color:#EBEBEB">
+  <body ng-app="tisitsApp" style="background-color:#EBEBEB">
     <style>
       @media (max-width: 800px) {
       	img {
@@ -91,7 +91,7 @@
       </div>
     </div>
   </div>
-    <div class="container" ng-controller="mysfitsFilterController">
+    <div class="container" ng-controller="tisitsFilterController">
       <div id="filterMenu">
         <ul class="nav nav-pills">
           &nbsp;
@@ -110,38 +110,38 @@
     </div>
     <br>
     <div class="container">
-      <div id="mysfitsGrid" class="row" ng-controller="mysfitsListController">
-        <div class="col-md-4 border border-warning" ng-repeat="mysfit in mysfits">
+      <div id="tisitsGrid" class="row" ng-controller="tisitsListController">
+        <div class="col-md-4 border border-warning" ng-repeat="tisit in tisits">
             <br>
             <p align="center">
-              <strong> {{mysfit.name}}</strong>
+              <strong> {{tisit.name}}</strong>
               <br>
-              <img src="{{mysfit.thumbImageUri}}" alt="{{mysfit.Name}}">
+              <img src="{{tisit.thumbImageUri}}" alt="{{tisit.Name}}">
               <br>
               <br>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal" data-TisitID="{{mysfit.TisitID}}">View Profile</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal" data-TisitID="{{tisit.TisitID}}">View Profile</button>
             </p>
             <p>
               <br>
-              <b>Species:</b> {{mysfit.species}}
+              <b>Species:</b> {{tisit.species}}
               <br>
-              <b>Good/Evil:</b> {{mysfit.goodevil}}
+              <b>Good/Evil:</b> {{tisit.goodevil}}
               <br>
-              <b>Lawful/Chaotic:</b> {{mysfit.lawchaos}}
+              <b>Lawful/Chaotic:</b> {{tisit.lawchaos}}
               <span style="float:right;">
-                <img id="{{mysfit.TisitID}}LikeIcon" ng-click="likeClicked(mysfit.TisitID)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
-                <img id="{{mysfit.TisitID}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
+                <img id="{{tisit.TisitID}}LikeIcon" ng-click="likeClicked(tisit.TisitID)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
+                <img id="{{tisit.TisitID}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
               </span>
             </p>
         </div>
       </div>
     </div>
-    <div class="modal fade bd-example-modal-lg" id="profileModal" tabindex="-1" aria-hidden="true" ng-controller="mysfitProfileController">
+    <div class="modal fade bd-example-modal-lg" id="profileModal" tabindex="-1" aria-hidden="true" ng-controller="tisitProfileController">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h3>Mysfit Profile</h3>
+            <h3>Tisit Profile</h3>
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
               <span class="sr-only">Close</span>
@@ -162,7 +162,7 @@
             <p id="profileLikes"><b>Likes:</b> {{profileMysfit.likes}}</p>
             <p align="center">
               <button id="adoptButton" align="center" type="button" ng-click="adoptClicked(profileMysfit.TisitID)" class="btn btn-primary">Adopt Me Now!</button>
-              <button id="alreadyAdoptedButton" align="center" type="button" class="btn btn-primary d-none" disabled>Mysfit Adopted!</button>
+              <button id="alreadyAdoptedButton" align="center" type="button" class="btn btn-primary d-none" disabled>Tisit Adopted!</button>
             </p>
           </div>
           <div class="modal-footer">
@@ -179,15 +179,15 @@
   </body>
   <script>
 
-    var mysfitsApiEndpoint = 'REPLACE_ME'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
-    var streamingApiEndpoint = 'REPLACE_ME'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
-    var questionsApiEndpoint = 'REPLACE_ME'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
+    var tisitsApiEndpoint = 'http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
+    var cognitoUserPoolId = 'us-east-2_AK7SP9ZOy';  // example: 'us-east-1_abcd12345'
+    var cognitoUserPoolClientId = '3ish7nal4ngbupng48mcue1e37'; // example: 'abcd12345abcd12345abcd12345'
+    var awsRegion = 'us-east-2'; // example: 'us-east-1' or 'eu-west-1' etc.
 
-    var cognitoUserPoolId = 'REPLACE_ME';  // example: 'us-east-1_abcd12345'
-    var cognitoUserPoolClientId = 'REPLACE_ME'; // example: 'abcd12345abcd12345abcd12345'
-    var awsRegion = 'REPLACE_ME'; // example: 'us-east-1' or 'eu-west-1' etc.
+    var streamingApiEndpoint = 'https://lt8lgvnywf.execute-api.us-east-2.amazonaws.com/prod'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
+    var questionsApiEndpoint = 'https://h4nn6q8956.execute-api.us-east-2.amazonaws.com/prod'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
 
-    var app = angular.module('mysfitsApp', []);
+    var app = angular.module('tisitsApp', []);
 
     var gridScope;
 
@@ -365,11 +365,11 @@
     app.controller('clearFilterController', function($scope) {
     });
 
-    app.controller('mysfitsFilterController', function($scope) {
+    app.controller('tisitsFilterController', function($scope) {
 
       filterScope = $scope;
 
-      // The possible options for Mysfits to populate the dropdown filters.
+      // The possible options for Tisits to populate the dropdown filters.
       $scope.filterOptionsList =
        {
          "categories": [
@@ -404,16 +404,16 @@
            } else {
              filterCategoryQS = "LawChaos"
            }
-           var mysfitsApi = mysfitsApiEndpoint + '/mysfits?' + 'filter=' + filterCategoryQS + "&value=" + filterValue;
+           var tisitsApi = tisitsApiEndpoint + '/tisits?' + 'filter=' + filterCategoryQS + "&value=" + filterValue;
 
            $.ajax({
-             url : mysfitsApi,
+             url : tisitsApi,
              type : 'GET',
              success : function(response) {
-               applyGridScope(response.mysfits)
+               applyGridScope(response.tisits)
              },
              error : function(response) {
-               console.log("could not retrieve mysfits list.");
+               console.log("could not retrieve tisits list.");
                if (response.status == "401") {
                   refreshAWSCredentials();
                 }
@@ -425,7 +425,7 @@
 
     });
 
-    app.controller('mysfitsListController', function($scope) {
+    app.controller('tisitsListController', function($scope) {
 
       gridScope = $scope;
 
@@ -440,7 +440,7 @@
 
     });
 
-    app.controller('mysfitProfileController', function($scope) {
+    app.controller('tisitProfileController', function($scope) {
 
       profileScope = $scope;
 
@@ -497,20 +497,20 @@
 
     }
 
-    function applyGridScope(mysfitsList) {
-      gridScope.mysfits = mysfitsList;
+    function applyGridScope(tisitsList) {
+      gridScope.tisits = tisitsList;
       gridScope.$apply();
     }
 
-    function applyProfileScope(mysfit) {
-      profileScope.profileMysfit = mysfit;
+    function applyProfileScope(tisit) {
+      profileScope.profileMysfit = tisit;
       profileScope.$apply();
     }
 
     function likeMysfit(TisitID, callback) {
 
       try {
-        var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + TisitID + "/like";
+        var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID + "/like";
 
         var sessionTokensString = localStorage.getItem('sessionTokens');
         var sessionTokens = JSON.parse(sessionTokensString);
@@ -518,7 +518,7 @@
         var idJwt = IdToken.jwtToken;
 
         $.ajax({
-          url : mysfitsApi,
+          url : tisitsApi,
           type : 'POST',
           headers : {'Authorization' : idJwt },
           success : function(response) {
@@ -526,7 +526,7 @@
             callback(TisitID);
           },
           error : function(response) {
-            console.log("could not like mysfit");
+            console.log("could not like tisit");
             console.log(response);
             if (response.status == "401") {
                refreshAWSCredentials();
@@ -534,7 +534,7 @@
           }
         });
       } catch(err) {
-        alert("You must be logged in to like a mysfit");
+        alert("You must be logged in to like a tisit");
         console.log(err.message);
       }
 
@@ -543,7 +543,7 @@
     function adoptMysfit(TisitID, callback) {
 
       try {
-        var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + TisitID + "/adopt";
+        var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID + "/adopt";
 
         var sessionTokensString = localStorage.getItem('sessionTokens');
         var sessionTokens = JSON.parse(sessionTokensString);
@@ -551,7 +551,7 @@
         var idJwt = IdToken.jwtToken;
 
         $.ajax({
-          url : mysfitsApi,
+          url : tisitsApi,
           async : false,
           type : 'POST',
           headers : {'Authorization' : idJwt },
@@ -559,14 +559,14 @@
             callback();
           },
           error : function(response) {
-            console.log("could not adopt mysfit");
+            console.log("could not adopt tisit");
             if (response.status == "401") {
                refreshAWSCredentials();
              }
           }
         });
       } catch(err) {
-        alert("You must be logged in to adopt a mysfit");
+        alert("You must be logged in to adopt a tisit");
         console.log(err.message);
       }
 
@@ -574,16 +574,16 @@
 
     function getAllMysfits(callback) {
 
-      var mysfitsApi = mysfitsApiEndpoint + '/mysfits';
+      var tisitsApi = tisitsApiEndpoint + '/tisits';
 
       $.ajax({
-        url : mysfitsApi,
+        url : tisitsApi,
         type : 'GET',
         success : function(response) {
-          callback(response.mysfits);
+          callback(response.tisits);
         },
         error : function(response) {
-          console.log("could not retrieve mysfits list.");
+          console.log("could not retrieve tisits list.");
           if (response.status == "401") {
              refreshAWSCredentials();
            }
@@ -593,16 +593,16 @@
 
     function getMysfit(TisitID, callback) {
 
-      var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + TisitID;
+      var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID;
 
       $.ajax({
-        url : mysfitsApi,
+        url : tisitsApi,
         type : 'GET',
         success : function(response) {
           callback(response);
         },
         error : function(response) {
-          console.log("could not retrieve mysfits list.");
+          console.log("could not retrieve tisits list.");
           if (response.status == "401") {
              refreshAWSCredentials();
            }
@@ -648,7 +648,7 @@
   }
 
   /* The new JavaScript function for module 6 that submits questions
-   * to the Mythical Mysfits administrator.
+   * to the Tisits administrator.
    *
    */
    function submitQuestion(emailAddress, questionToSubmit) {

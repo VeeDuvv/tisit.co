@@ -39,7 +39,7 @@ def postQuestion(event, context):
     #   hangingException(errorMsg)
 
     ddb.put_item(
-        TableName="MysfitsQuestionsTable",
+        TableName="TisitsQuestionsTable",
         Item=question
         )
 

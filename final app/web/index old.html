@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <!--
-      A new version of the Mythical Mysfits API that includes updated JavaScript
-      code to send an additional PUT request whenever a mysfit profile is viewed
+      A new version of the Tisits API that includes updated JavaScript
+      code to send an additional PUT request whenever a tisit profile is viewed
       by a user.
     -->
-    <title>Mythical Mysfits</title>
+    <title>Tisits</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -18,7 +18,7 @@
     <script src="js/aws-cognito-sdk.min.js"></script>
     <script src="js/amazon-cognito-identity.min.js"></script>
   </head>
-  <body ng-app="mysfitsApp" style="background-color:#EBEBEB">
+  <body ng-app="tisitsApp" style="background-color:#EBEBEB">
     <style>
       @media (max-width: 800px) {
       	img {
@@ -32,10 +32,11 @@
     </div>
     <div class="container">
         <div class='btn-toolbar float-right'>
-          <button type="button" id="askQuestionButton" class="btn btn-success btn-lg" data-toggle="modal" data-target="#questionModal">Contact Us</button>
-          &nbsp;
           <button type="button" id="logInButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">Log In / Register</button>
+          &nbsp;
           <button type="button" id="logOutButton" class="btn btn-danger btn-lg d-none">Log Out</button>
+          &nbsp;
+          <button type="button" id="askQuestionButton" class="btn btn-success btn-lg" data-toggle="modal" data-target="#questionModal">Contact Us</button>
         </div>
     </div>
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -59,64 +60,6 @@
           <div class="login-help">
             <a href="register.html">Register</a>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    <br>
-    <br>
-  <span style="text-align: center;">
-    <p>
-      <br>
-      <b>Welcome to our adoption center!</b>
-    </p>
-    <hr>
-    <p>
-      <b>Our mission:</b> Ethical, mythical creature care.
-      <br>
-      <b>Our priority:</b> Finding homes for the abandoned, and often misunderstood, mythical creatures in our community.
-      <br>
-      <br>
-      <span style="margin: 50px">
-        We, at Mythical Mysfits believe that all creatures deserve a second chance...
-        <br>
-        Even if they spent their first chance hiding under bridges and unapologetically robbing helpless travelers.
-        <br>
-        <br>
-        Browse the creatures below and find a match that will set your heart on fire!
-      </span>
-    </p>
-    <hr>
-  </span>
-  <br>
-  <div ng-controller="mysfitsRecommendationController" class="modal fade" id="recommendationModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h2>Mysfit Recommendations</h2>
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
-        </div>
-
-        <!-- Modal Body -->
-        <div class="modal-body">
-          <form id="recommendationForm">
-            Answer the following questions to find the Mysfit we think is the best fit for you!
-            <hr>
-            <ol>
-              <li ng-repeat="question in questionnaire.questions">
-                <h5>{{question.questionText}}</h5>
-                <div ng-repeat="selection in question.selectionOptions" >
-                    <input type="radio" name={{question.questionId}} value={{selection.selectionValue}}>&nbsp;{{selection.selectionText}}</input><br>
-                </div>
-                <hr>
-              </li>
-            </ol>
-            <input type="submit" id="recommendation-modal-button" name="recommendationButton" class="btn btn-info" value="Submit" />
-          </form>
         </div>
       </div>
     </div>
@@ -148,7 +91,7 @@
       </div>
     </div>
   </div>
-    <div class="container" ng-controller="mysfitsFilterController">
+    <div class="container" ng-controller="tisitsFilterController">
       <div id="filterMenu">
         <ul class="nav nav-pills">
           &nbsp;
@@ -162,47 +105,43 @@
           <li class="nav-item " >
             <button type="button" class="btn btn-success" ng-click="removeFilter()">View All</button>
           </li>
-          &nbsp;
-          <li class="nav-item " >
-            <button type="button" id="recommendMysfitButton" class="btn btn-warning" data-toggle="modal" data-target="#recommendationModal">Recommend a Mysfit</button>
-          </li>
         </ul>
       </div>
     </div>
     <br>
     <div class="container">
-      <div id="mysfitsGrid" class="row" ng-controller="mysfitsListController">
-        <div class="col-md-4 border border-warning" ng-repeat="mysfit in mysfits">
+      <div id="tisitsGrid" class="row" ng-controller="tisitsListController">
+        <div class="col-md-4 border border-warning" ng-repeat="tisit in tisits">
             <br>
             <p align="center">
-              <strong> {{mysfit.name}}</strong>
+              <strong> {{tisit.name}}</strong>
               <br>
-              <img src="{{mysfit.thumbImageUri}}" alt="{{mysfit.Name}}">
+              <img src="{{tisit.thumbImageUri}}" alt="{{tisit.Name}}">
               <br>
               <br>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal" data-TisitID="{{mysfit.TisitID}}">View Profile</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal" data-TisitID="{{tisit.TisitID}}">View Profile</button>
             </p>
             <p>
               <br>
-              <b>Species:</b> {{mysfit.species}}
+              <b>Species:</b> {{tisit.species}}
               <br>
-              <b>Good/Evil:</b> {{mysfit.goodevil}}
+              <b>Good/Evil:</b> {{tisit.goodevil}}
               <br>
-              <b>Lawful/Chaotic:</b> {{mysfit.lawchaos}}
+              <b>Lawful/Chaotic:</b> {{tisit.lawchaos}}
               <span style="float:right;">
-                <img id="{{mysfit.TisitID}}LikeIcon" ng-click="likeClicked(mysfit.TisitID)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
-                <img id="{{mysfit.TisitID}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
+                <img id="{{tisit.TisitID}}LikeIcon" ng-click="likeClicked(tisit.TisitID)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
+                <img id="{{tisit.TisitID}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
               </span>
             </p>
         </div>
       </div>
     </div>
-    <div class="modal fade bd-example-modal-lg" id="profileModal" tabindex="-1" aria-hidden="true" ng-controller="mysfitProfileController">
+    <div class="modal fade bd-example-modal-lg" id="profileModal" tabindex="-1" aria-hidden="true" ng-controller="tisitProfileController">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h3>Mysfit Profile</h3>
+            <h3>Tisit Profile</h3>
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span>
               <span class="sr-only">Close</span>
@@ -223,7 +162,7 @@
             <p id="profileLikes"><b>Likes:</b> {{profileMysfit.likes}}</p>
             <p align="center">
               <button id="adoptButton" align="center" type="button" ng-click="adoptClicked(profileMysfit.TisitID)" class="btn btn-primary">Adopt Me Now!</button>
-              <button id="alreadyAdoptedButton" align="center" type="button" class="btn btn-primary d-none" disabled>Mysfit Adopted!</button>
+              <button id="alreadyAdoptedButton" align="center" type="button" class="btn btn-primary d-none" disabled>Tisit Adopted!</button>
             </p>
           </div>
           <div class="modal-footer">
@@ -232,37 +171,29 @@
         </div>
       </div>
     </div>
-    <br>
-    <br>
-    <div style="text-align: center;">
-      <p>
-        This site was created for use in the AWS Modern Application Workshop.
-        <br>
-        Get started by accessing the <a href="https://github.com/aws-samples/aws-modern-application-workshop">GitHub Repository</a> or visit <a href="http://aws.amazon.com/build-modern-app">aws.amazon.com/build-modern-app</a>.
-        <br>
-        For more information about getting started with AWS, visit our <a href="http://aws.amazon.com/developer">Developer Center</a>.
-      </p>
-    </div>
+    <p>
+      <br>
+      <br>
+      &nbsp;&nbsp;This site was created for use in the AWS Modern Application Workshop. <a href="https://github.com/aws-samples/aws-modern-application-workshop">Please see details here.</a>
+    </p>
+  </body>
   <script>
 
-    var mysfitsApiEndpoint = 'REPLACE_ME'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
-    var streamingApiEndpoint = 'REPLACE_ME'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
-    var questionsApiEndpoint = 'REPLACE_ME'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
-    var recommendationsApiEndpoint = 'REPLACE_ME'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
+    var tisitsApiEndpoint = 'http://tisit-nlb-6bb80812996907f2.elb.us-east-2.amazonaws.com'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
+    var cognitoUserPoolId = 'us-east-2_AK7SP9ZOy';  // example: 'us-east-1_abcd12345'
+    var cognitoUserPoolClientId = '3ish7nal4ngbupng48mcue1e37'; // example: 'abcd12345abcd12345abcd12345'
+    var awsRegion = 'us-east-2'; // example: 'us-east-1' or 'eu-west-1' etc.
 
-    var cognitoUserPoolId = 'REPLACE_ME';  // example: 'us-east-1_abcd12345'
-    var cognitoUserPoolClientId = 'REPLACE_ME'; // example: 'abcd12345abcd12345abcd12345'
-    var awsRegion = 'REPLACE_ME'; // example: 'us-east-1' or 'eu-west-1' etc.
+    var streamingApiEndpoint = 'https://lt8lgvnywf.execute-api.us-east-2.amazonaws.com/prod'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
+    var questionsApiEndpoint = 'https://h4nn6q8956.execute-api.us-east-2.amazonaws.com/prod'; // example: 'https://abcd12345.execute-api.us-east-1.amazonaws.com/prod'
 
-    var app = angular.module('mysfitsApp', []);
+    var app = angular.module('tisitsApp', []);
 
     var gridScope;
 
     var filterScope;
 
     var profileScope;
-
-    var recommendationScope;
 
     initializeStorage();
 
@@ -292,10 +223,10 @@
     }
 
 
-    $(document).on('click', '#logOutButton', function(event) {
-      localStorage.clear();
-      document.location.reload();
-    });
+  $(document).on('click', '#logOutButton', function(event) {
+    localStorage.clear();
+    document.location.reload();
+  });
 
 
     function loginUser() {
@@ -431,283 +362,14 @@
       submitQuestion(emailAddress, questionText );
     });
 
-
-
-    /*
-     MODULE-7 recommendation.  For the purposes of this workshop,
-      we have directly described the questions and choices via the below json
-      object.  It would be common for this object or one like it to be retrieved
-      via API so that your frontend would not have to be aware of the exact
-      questions and choices as part of its code. But because creating a new
-      microservice for the purpose of retrieving the questionnaire would not have
-      added any addition learning topics, we have chosent to hardcode it here
-      instead.
-    */
-    $("#recommendationForm").submit(function(event) {
-      event.preventDefault();
-      $('#recommendationModal').modal('toggle')
-      var age = parseInt(document.querySelector('input[name="ageQ"]:checked').value);
-      var job = parseInt(document.querySelector('input[name="jobQ"]:checked').value);
-      var relax = parseInt(document.querySelector('input[name="relaxQ"]:checked').value);
-      var color = parseInt(document.querySelector('input[name="colorQ"]:checked').value);
-      var sport = parseInt(document.querySelector('input[name="sportQ"]:checked').value);
-
-      var selections = [
-          age,
-          job,
-          relax,
-          color,
-          sport
-         ];
-
-      console.log(selections);
-
-      getMysfitRecommendation(selections);
-
-    });
-
-    function displayProfileModal(profileMysfit) {
-      updateModalText(profileMysfit);
-      $('#profileModal').modal("show");
-    }
-
-    function getMysfitRecommendation(submission) {
-
-    var recommendationsApi = recommendationsApiEndpoint + '/recommendations';
-    var entry;
-
-
-    questionnaireEntry = {
-      entry: submission
-    }
-
-    $.ajax({
-      url : recommendationsApi,
-      type : 'POST',
-      headers : {'Content-Type': 'application/json'},
-      dataType: 'json',
-      data : JSON.stringify(questionnaireEntry),
-      success : function(response) {
-        console.log("recommendation received!");
-        console.log(response);
-        getMysfit(response.recommendedMysfit, displayProfileModal);
-
-      },
-      error : function(response) {
-        console.log("could not submit question");
-        console.log(response);
-      }
-    });
-
-    }
-
-    app.controller('mysfitsRecommendationController', function($scope) {
-      recommendationScope = $scope;
-
-      recommendationScope.questionnaire = {
-        questions: [
-         {
-           questionId: "jobQ",
-           questionText: "How old are you?",
-           selectionOptions: [
-             {
-               selectionText: "Innocent",
-               selectionValue: "1"
-             },
-             {
-               selectionText: "Insufferable",
-               selectionValue: "2"
-             },
-             {
-               selectionText: "Inconsolable",
-               selectionValue: "3"
-             },
-             {
-               selectionText: "Fake it 'til you make it",
-               selectionValue: "4"
-             },
-             {
-               selectionText: "What's escrow?",
-               selectionValue: "5"
-             },
-             {
-               selectionText: "Forty is the new thirty",
-               selectionValue: "6"
-             },
-             {
-               selectionText: "How rude!!!",
-               selectionValue: "7"
-             },
-             {
-               selectionText: "Age is just a number",
-               selectionValue: "8"
-             }
-           ]
-         },
-         {
-           questionId: "ageQ",
-           questionText: "What is your occupation?",
-           selectionOptions: [
-             {
-               selectionText: "Full-Stack Unicorn",
-               selectionValue: "1"
-             },
-             {
-               selectionText: "MysOps Administrator",
-               selectionValue: "2"
-             },
-             {
-               selectionText: "Product Mangler",
-               selectionValue: "3"
-             },
-             {
-               selectionText: "Site Mysfitability Engineer",
-               selectionValue: "4"
-             },
-             {
-               selectionText: "Interbridge Troll",
-               selectionValue: "5"
-             },
-             {
-               selectionText: "Quality Destruction Engineer",
-               selectionValue: "6"
-             },
-             {
-               selectionText: "Co-Co-Founder",
-               selectionValue: "7"
-             },
-             {
-               selectionText: "Consultant",
-               selectionValue: "8"
-             }
-           ]
-         },
-         {
-           questionId: "relaxQ",
-           questionText: "What is your favorite relaxing activity?",
-           selectionOptions: [
-             {
-               selectionText: "Avoiding spoilers",
-               selectionValue: "1"
-             },
-             {
-               selectionText: "Posting spoilers on social media",
-               selectionValue: "2"
-             },
-             {
-               selectionText: "Reading the book first",
-               selectionValue: "3"
-             },
-             {
-               selectionText: "Writing TODO instead of real code",
-               selectionValue: "4"
-             },
-             {
-               selectionText: "Opening Vim",
-               selectionValue: "5"
-             },
-             {
-               selectionText: "Self-Loathing",
-               selectionValue: "6"
-             },
-             {
-               selectionText: "Golf",
-               selectionValue: "7"
-             },
-             {
-               selectionText: "Arguing with strangers on the Internet",
-               selectionValue: "8"
-             }
-           ]
-         },
-         {
-           questionId: "colorQ",
-           questionText: "What is your favorite color?",
-           selectionOptions: [
-             {
-               selectionText: "Black",
-               selectionValue: "1"
-             },
-             {
-               selectionText: "White",
-               selectionValue: "2"
-             },
-             {
-               selectionText: "Red All Over",
-               selectionValue: "3"
-             },
-             {
-               selectionText: "Greige",
-               selectionValue: "4"
-             },
-             {
-               selectionText: "Rainbow",
-               selectionValue: "5"
-             },
-             {
-               selectionText: "Reddish Green",
-               selectionValue: "6"
-             },
-             {
-               selectionText: "Gold",
-               selectionValue: "7"
-             },
-             {
-               selectionText: "Rich Mahogany",
-               selectionValue: "8"
-             }
-           ]
-         },
-         {
-           questionId: "sportQ",
-           questionText: "What is your favorite extreme sport?",
-           selectionOptions: [
-             {
-               selectionText: "Broomball",
-               selectionValue: "1"
-             },
-             {
-               selectionText: "Power Napping",
-               selectionValue: "2"
-             },
-             {
-               selectionText: "Laughing at jokes you didn't understand",
-               selectionValue: "3"
-             },
-             {
-               selectionText: "Turning people to stone",
-               selectionValue: "4"
-             },
-             {
-               selectionText: "Calling thread.fork()",
-               selectionValue: "5"
-             },
-             {
-               selectionText: "Quitting Vim",
-               selectionValue: "6"
-             },
-             {
-               selectionText: "Politics",
-               selectionValue: "7"
-             },
-             {
-               selectionText: "Deciding where to eat",
-               selectionValue: "8"
-             }
-           ]
-         }
-        ]
-      }
-    });
-
     app.controller('clearFilterController', function($scope) {
     });
 
-    app.controller('mysfitsFilterController', function($scope) {
+    app.controller('tisitsFilterController', function($scope) {
 
       filterScope = $scope;
 
-      // The possible options for Mysfits to populate the dropdown filters.
+      // The possible options for Tisits to populate the dropdown filters.
       $scope.filterOptionsList =
        {
          "categories": [
@@ -742,16 +404,16 @@
            } else {
              filterCategoryQS = "LawChaos"
            }
-           var mysfitsApi = mysfitsApiEndpoint + '/mysfits?' + 'filter=' + filterCategoryQS + "&value=" + filterValue;
+           var tisitsApi = tisitsApiEndpoint + '/tisits?' + 'filter=' + filterCategoryQS + "&value=" + filterValue;
 
            $.ajax({
-             url : mysfitsApi,
+             url : tisitsApi,
              type : 'GET',
              success : function(response) {
-               applyGridScope(response.mysfits)
+               applyGridScope(response.tisits)
              },
              error : function(response) {
-               console.log("could not retrieve mysfits list.");
+               console.log("could not retrieve tisits list.");
                if (response.status == "401") {
                   refreshAWSCredentials();
                 }
@@ -763,7 +425,7 @@
 
     });
 
-    app.controller('mysfitsListController', function($scope) {
+    app.controller('tisitsListController', function($scope) {
 
       gridScope = $scope;
 
@@ -778,7 +440,7 @@
 
     });
 
-    app.controller('mysfitProfileController', function($scope) {
+    app.controller('tisitProfileController', function($scope) {
 
       profileScope = $scope;
 
@@ -797,10 +459,8 @@
     $('#profileModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var TisitID = button.data('TisitID');
-      if (TisitID) {
-        getMysfit(TisitID, updateModalText);
-        recordProfileClick(TisitID);
-      }
+      getMysfit(TisitID, updateModalText);
+      recordProfileClick(TisitID)
 
 
     });
@@ -837,20 +497,20 @@
 
     }
 
-    function applyGridScope(mysfitsList) {
-      gridScope.mysfits = mysfitsList;
+    function applyGridScope(tisitsList) {
+      gridScope.tisits = tisitsList;
       gridScope.$apply();
     }
 
-    function applyProfileScope(mysfit) {
-      profileScope.profileMysfit = mysfit;
+    function applyProfileScope(tisit) {
+      profileScope.profileMysfit = tisit;
       profileScope.$apply();
     }
 
     function likeMysfit(TisitID, callback) {
 
       try {
-        var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + TisitID + "/like";
+        var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID + "/like";
 
         var sessionTokensString = localStorage.getItem('sessionTokens');
         var sessionTokens = JSON.parse(sessionTokensString);
@@ -858,7 +518,7 @@
         var idJwt = IdToken.jwtToken;
 
         $.ajax({
-          url : mysfitsApi,
+          url : tisitsApi,
           type : 'POST',
           headers : {'Authorization' : idJwt },
           success : function(response) {
@@ -866,7 +526,7 @@
             callback(TisitID);
           },
           error : function(response) {
-            console.log("could not like mysfit");
+            console.log("could not like tisit");
             console.log(response);
             if (response.status == "401") {
                refreshAWSCredentials();
@@ -874,7 +534,7 @@
           }
         });
       } catch(err) {
-        alert("You must be logged in to like a mysfit");
+        alert("You must be logged in to like a tisit");
         console.log(err.message);
       }
 
@@ -883,7 +543,7 @@
     function adoptMysfit(TisitID, callback) {
 
       try {
-        var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + TisitID + "/adopt";
+        var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID + "/adopt";
 
         var sessionTokensString = localStorage.getItem('sessionTokens');
         var sessionTokens = JSON.parse(sessionTokensString);
@@ -891,7 +551,7 @@
         var idJwt = IdToken.jwtToken;
 
         $.ajax({
-          url : mysfitsApi,
+          url : tisitsApi,
           async : false,
           type : 'POST',
           headers : {'Authorization' : idJwt },
@@ -899,14 +559,14 @@
             callback();
           },
           error : function(response) {
-            console.log("could not adopt mysfit");
+            console.log("could not adopt tisit");
             if (response.status == "401") {
                refreshAWSCredentials();
              }
           }
         });
       } catch(err) {
-        alert("You must be logged in to adopt a mysfit");
+        alert("You must be logged in to adopt a tisit");
         console.log(err.message);
       }
 
@@ -914,16 +574,16 @@
 
     function getAllMysfits(callback) {
 
-      var mysfitsApi = mysfitsApiEndpoint + '/mysfits';
+      var tisitsApi = tisitsApiEndpoint + '/tisits';
 
       $.ajax({
-        url : mysfitsApi,
+        url : tisitsApi,
         type : 'GET',
         success : function(response) {
-          callback(response.mysfits);
+          callback(response.tisits);
         },
         error : function(response) {
-          console.log("could not retrieve mysfits list.");
+          console.log("could not retrieve tisits list.");
           if (response.status == "401") {
              refreshAWSCredentials();
            }
@@ -933,16 +593,16 @@
 
     function getMysfit(TisitID, callback) {
 
-      var mysfitsApi = mysfitsApiEndpoint + '/mysfits/' + TisitID;
+      var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID;
 
       $.ajax({
-        url : mysfitsApi,
+        url : tisitsApi,
         type : 'GET',
         success : function(response) {
           callback(response);
         },
         error : function(response) {
-          console.log("could not retrieve mysfit.");
+          console.log("could not retrieve tisits list.");
           if (response.status == "401") {
              refreshAWSCredentials();
            }
@@ -987,7 +647,10 @@
 
   }
 
-
+  /* The new JavaScript function for module 6 that submits questions
+   * to the Tisits administrator.
+   *
+   */
    function submitQuestion(emailAddress, questionToSubmit) {
 
     var questionsApi = questionsApiEndpoint + '/questions';

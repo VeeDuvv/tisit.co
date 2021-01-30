@@ -27,9 +27,6 @@
       }
     </style>
     <br>
-    <div style="text-align: center">
-      <img src="https://www.mythicalmysfits.com/images/mysfits_banner.gif" width="800px" align="center">
-    </div>
     <div class="container">
         <div class='btn-toolbar float-right'>
           <button type="button" id="logInButton" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">Log In / Register</button>
@@ -98,7 +95,7 @@
           <li class="nav-item dropdown" ng-repeat="filterCategory in filterOptionsList.categories">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!" role="button" aria-haspopup="true" aria-expanded="false">{{filterCategory.title}}</a>
             <div class="dropdown-menu" >
-              <button class="dropdown-item" ng-repeat="filterCategorySelection in filterCategory.selections" ng-click="queryMysfits(filterCategory.title, filterCategorySelection)">{{filterCategorySelection}}</button>
+              <button class="dropdown-item" ng-repeat="filterCategorySelection in filterCategory.selections" ng-click="queryTisits(filterCategory.title, filterCategorySelection)">{{filterCategorySelection}}</button>
             </div>
           </li>
           &nbsp;
@@ -129,8 +126,8 @@
               <br>
               <b>Lawful/Chaotic:</b> {{tisit.lawchaos}}
               <span style="float:right;">
-                <img id="{{tisit.TisitID}}LikeIcon" ng-click="likeClicked(tisit.TisitID)" src="https://www.mythicalmysfits.com/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
-                <img id="{{tisit.TisitID}}AlreadyLikedIcon" class="d-none" src="https://www.mythicalmysfits.com/images/like_icon_true.png" >
+                <img id="{{tisit.TisitID}}LikeIcon" ng-click="likeClicked(tisit.TisitID)" src="/images/like_icon_false.png" onmouseover="" style="cursor: pointer;">
+                <img id="{{tisit.TisitID}}AlreadyLikedIcon" class="d-none" src="/images/like_icon_true.png" >
               </span>
             </p>
         </div>
@@ -150,18 +147,18 @@
         <!-- Modal Body -->
           <div class="modal-body">
             <p align="center">
-              <img id="profileImage" src="{{profileMysfit.profileImageUri}}" align="center" />
+              <img id="profileImage" src="{{profileTisit.profileImageUri}}" align="center" />
             </p>
             <br>
-            <p id="profileName"><b>Name:</b> {{profileMysfit.name}}</p>
-            <p id="profileSpecies"><b>Species:</b> {{profileMysfit.species}}</p>
-            <p id="profileGoodEvil"><b>Good/Evil:</b> {{profileMysfit.goodevil}} </p>
-            <p id="profileLawChaos"><b>Lawful/Chaotic:</b>{{profileMysfit.lawchaos}} </p>
-            <p id="profileAge"><b>Age:</b> {{profileMysfit.age}}</p>
-            <p id="profileDescription"><b>Description:</b> {{profileMysfit.description}}</p>
-            <p id="profileLikes"><b>Likes:</b> {{profileMysfit.likes}}</p>
+            <p id="profileName"><b>Name:</b> {{profileTisit.name}}</p>
+            <p id="profileSpecies"><b>Species:</b> {{profileTisit.species}}</p>
+            <p id="profileGoodEvil"><b>Good/Evil:</b> {{profileTisit.goodevil}} </p>
+            <p id="profileLawChaos"><b>Lawful/Chaotic:</b>{{profileTisit.lawchaos}} </p>
+            <p id="profileAge"><b>Age:</b> {{profileTisit.age}}</p>
+            <p id="profileDescription"><b>Description:</b> {{profileTisit.description}}</p>
+            <p id="profileLikes"><b>Likes:</b> {{profileTisit.likes}}</p>
             <p align="center">
-              <button id="adoptButton" align="center" type="button" ng-click="adoptClicked(profileMysfit.TisitID)" class="btn btn-primary">Adopt Me Now!</button>
+              <button id="adoptButton" align="center" type="button" ng-click="adoptClicked(profileTisit.TisitID)" class="btn btn-primary">Adopt Me Now!</button>
               <button id="alreadyAdoptedButton" align="center" type="button" class="btn btn-primary d-none" disabled>Tisit Adopted!</button>
             </p>
           </div>
@@ -393,10 +390,10 @@
        };
 
        $scope.removeFilter = function() {
-         allMysfits = getAllMysfits(applyGridScope);
+         allTisits = getAllTisits(applyGridScope);
        }
 
-       $scope.queryMysfits = function(filterCategory, filterValue) {
+       $scope.queryTisits = function(filterCategory, filterValue) {
 
            var filterCategoryQS = "";
            if (filterCategory==="Good/Evil") {
@@ -429,13 +426,13 @@
 
       gridScope = $scope;
 
-      getAllMysfits(applyGridScope);
+      getAllTisits(applyGridScope);
 
 
 
       $scope.likeClicked = function(TisitID) {
         console.log("clicked: " + TisitID);
-        likeMysfit(TisitID, updateLikeIcons);
+        likeTisit(TisitID, updateLikeIcons);
       }
 
     });
@@ -446,7 +443,7 @@
 
       $scope.adoptClicked = function(TisitID) {
         console.log("adopt clicked: " +  TisitID);
-        adoptMysfit(TisitID, markAdopted);
+        adoptTisit(TisitID, markAdopted);
       }
 
     });
@@ -459,17 +456,17 @@
     $('#profileModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var TisitID = button.data('TisitID');
-      getMysfit(TisitID, updateModalText);
+      getTisit(TisitID, updateModalText);
       recordProfileClick(TisitID)
 
 
     });
 
-    function updateModalText(profileMysfit) {
+    function updateModalText(profileTisit) {
 
-      applyProfileScope(profileMysfit);
+      applyProfileScope(profileTisit);
 
-      if (profileMysfit.adopted == true) {
+      if (profileTisit.adopted == true) {
         markAdopted();
       } else {
         markNotAdopted();
@@ -503,11 +500,11 @@
     }
 
     function applyProfileScope(tisit) {
-      profileScope.profileMysfit = tisit;
+      profileScope.profileTisit = tisit;
       profileScope.$apply();
     }
 
-    function likeMysfit(TisitID, callback) {
+    function likeTisit(TisitID, callback) {
 
       try {
         var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID + "/like";
@@ -540,7 +537,7 @@
 
     }
 
-    function adoptMysfit(TisitID, callback) {
+    function adoptTisit(TisitID, callback) {
 
       try {
         var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID + "/adopt";
@@ -572,7 +569,7 @@
 
     }
 
-    function getAllMysfits(callback) {
+    function getAllTisits(callback) {
 
       var tisitsApi = tisitsApiEndpoint + '/tisits';
 
@@ -591,7 +588,7 @@
       });
     }
 
-    function getMysfit(TisitID, callback) {
+    function getTisit(TisitID, callback) {
 
       var tisitsApi = tisitsApiEndpoint + '/tisits/' + TisitID;
 
